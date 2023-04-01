@@ -14,14 +14,18 @@ const fetch = async (timestamp: number) => {
         dailySwapVolumes(where: {date: ${dayTimestamp}}) {
           amount
         }
+        swapProtocolVolumes(){
+          totalVolumeUSD
+        }
       }
       `
     };
 
     const dailyVolume = await (await axios.post(url, data)).data.data.dailySwapVolumes[0].amount.toString();
+    const totalVolume = await (await axios.post(url, data)).data.data.dailySwapVolumes.totalVolumeUSD.toString();
 
     return {
-      totalVolume: "0" /**fix it */,
+      totalVolume,
       dailyVolume,
       timestamp: dayTimestamp,
     };
